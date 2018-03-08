@@ -11,12 +11,12 @@
 //          IIFE (ifi)   immediately-invoked function expression 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-//     (function(){
-//         var a = "Expresion anónima auto ejecturable";
-//         var b = "crear scope propio para las variables no sean Global";
+	//     (function(){
+	//         var a = "Expresion anónima auto ejecturable";
+	//         var b = "crear scope propio para las variables no sean Global";
 
-//         console.log(a+"\n"+b);
-//     })();
+	//         console.log(a+"\n"+b);
+	//     })();
    
 
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -170,6 +170,7 @@
 	El entorno está formado por las variables locales que estaban dentro del alcance en el momento que se creó el closure. 
 
 	*/
+
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //			Ejemplo Closure
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
@@ -193,10 +194,8 @@
 		// } 
 
 
-
-
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//			Ejemplo Closure
+//			Ejemplo Closure (perfecto)
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// 	/*
 	// 	//https://developer.mozilla.org/es/docs/Web/JavaScript/Closures
@@ -218,7 +217,7 @@
 
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//			Ejemplo Closure
+//			Ejemplo Closure  -  no me cerra
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	// function bar(fn){
@@ -235,26 +234,48 @@
 	// }
 
 
+	// var fn;
 
-	var fn;
+	// function foo(){
+	// 	var a = 2;
 
-	function foo(){
-		var a =2;
+	// 	function baz(){
+ // 			console.log(a);
+ // 		}
 
- 		function baz(){
- 			console.log(a);
- 		}
+ // 		fn = baz;
+	// }
+	// function bar(){
+	// 	fn()
+	// }
 
- 		fn = baz;
+	// foo();
+	// bar();
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//			Loops and Closure
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+// 
+	
+	//Es Igual a hacer esto: 
+
+// 		for (let i = 1; i <= 5; i++) {			
+// 		(function(){	
+// 			var j = i;					
+// 			setTimeout(function timer(){
+// 				console.log(j);
+// 			},i*1000)
+// 		})();	
+// 	}
+	//Es Igual a hacer esto: 
+
+		for (let i = 1; i <= 5; i++) {										
+			setTimeout(function timer(){
+				console.log(i);
+		},i*1000)
+			
 	}
-
-	function bar(){
-		fn()
-	}
-
-	foo();
-	bar();
-
 
 
 
