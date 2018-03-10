@@ -256,26 +256,92 @@
 //			Loops and Closure
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-// 
+	// 
+		
+		//Es Igual a hacer esto: 
+
+	// 		for (let i = 1; i <= 5; i++) {			
+	// 		(function(){	
+	// 			var j = i;					
+	// 			setTimeout(function timer(){
+	// 				console.log(j);
+	// 			},i*1000)
+	// 		})();	
+	// 	}
+
+		//Es Igual a hacer esto: 
+
+		// 	for (let i = 1; i <= 5; i++) {										
+		// 		setTimeout(function timer(){
+		// 			console.log(i);
+		// 	},i*1000)
+				
+		// }
+
+	//	There’s a special behavior defined for let declarations used in the head of a for loop.
+	//	This behavior says that the variable will be declared not just once for the loop, but each iteration.
+	//	And, it will, helpfully, be initialized at each subsequent iteration with the value from the end of the previous iteration.
+
+
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//			 					MODULO
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	
-	//Es Igual a hacer esto: 
+	
+	var MyModules = (function Manager() {
+	    
+	    var modules = {};
 
-// 		for (let i = 1; i <= 5; i++) {			
-// 		(function(){	
-// 			var j = i;					
-// 			setTimeout(function timer(){
-// 				console.log(j);
-// 			},i*1000)
-// 		})();	
-// 	}
-	//Es Igual a hacer esto: 
+	    function define(name, deps, impl) {
+	        for (var i=0; i<deps.length; i++) {
+	            deps[i] = modules[deps[i]];
+	        }
+	        modules[name] = impl.apply( impl, deps );
+	    }
 
-		for (let i = 1; i <= 5; i++) {										
-			setTimeout(function timer(){
-				console.log(i);
-		},i*1000)
-			
-	}
+	    function get(name) {
+	        return modules[name];
+	    }
+
+	    return {
+	        define: define,
+	        get: get
+	    };
+	})();
 
 
+	 
+	//  y asi se usa
 
+
+	MyModules.define( "bar", [], function(){
+	    function hello(who) {
+	        return "Let me introduce: " + who;
+	    }
+
+	    return {
+	        hello: hello
+	    };
+	});
+
+	MyModules.define( "foo", ["bar"], function(bar){
+	    var hungry = "hippo";
+
+	    function awesome() {
+	        console.log( bar.hello( hungry ).toUpperCase() );
+	    }
+
+	    return {
+	        awesome: awesome
+	    };
+	} );
+
+	var bar = MyModules.get( "bar" );
+	var foo = MyModules.get( "foo" );
+
+	console.log(
+	    bar.hello( "hippo" )
+	); // Let me introduce: hippo
+
+	foo.awesome(); // LET ME INTRODUCE: HIPPO
